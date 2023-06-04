@@ -37,6 +37,7 @@ function printId(id: number | string) {
   }
 }
 
+// Another example is to use a function like Array.isArray:
 function welcomePeople(x: string[] | string) {
   if (Array.isArray(x)) {
     // Here: 'x' is 'string[]'
@@ -53,6 +54,13 @@ function getFirstThree(x: number[] | string) {
 }
 
 // Type Aliases
+type ID = number | string;
+
+// Interfaces
+
+// An interface declaration is another way to name an object type:
+// the key distinction is that a type cannot be re-opened to add new properties
+// an interface is always extendable.
 
 type Point = {
   x: number;
@@ -67,4 +75,20 @@ function printCoord2(pt: Point) {
 
 printCoord2({ x: 100, y: 100 });
 
-type ID = number | string;
+// Literal Types
+
+// combining literals into unions, you can express a much more useful concept
+// for example, functions that only accept a certain set of known values:
+function printText(s: string, alignment: "left" | "right" | "center") {
+  // ...
+}
+
+printText("Hello, world", "left");
+// printText("G'day, mate", "centre");
+
+// Literal Inference
+declare function handleRequest(url: string, method: "GET" | "POST"): void;
+
+// intend for req.method to always have the literal type "GET"
+const req = { url: "https://example.com", method: "GET" as "GET" };
+handleRequest(req.url, req.method);
